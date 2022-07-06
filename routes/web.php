@@ -14,7 +14,5 @@ use App\Http\Controllers\FootballController;
 |
 */
 
-Route::get('/', [FootballController::class, 'index']);
-/*Route::get('/', function () {
-    return 'welcome to dashboard!';
-});*/
+Route::get('/matches', [FootballController::class, 'getMatches']);
+
