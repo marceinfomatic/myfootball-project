@@ -1,6 +1,6 @@
 # myfootball-project
 
-> Consulta de partidos Europeos de Futbol mediante el consumo de una API de https://www.football-data.org/ mediante LARAVEL
+> Consulta de partidos Europeos de Futbol mediante el consumo de una API de https://www.football-data.org/ mediante PHP Y Laravel.
 > Se guarda la informacion de la consulta en la tabla matches de la base de datos football en mysql, verificando que no se repita la informaciòn consultada.
 > El listado de la informacion consultada se la realiza en el proyecto consulta-partidos-futbol, mediante vue y axios
 > https://github.com/marceinfomatic/consulta-partidos-futbol.git
