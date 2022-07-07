@@ -13,23 +13,26 @@ class FootballController extends Controller
 {
     private MatchManagerInterface $matchManager;
     public $config;
-    public $baseUri;
+   // public $baseUri;
     public $reqPrefs = array();
+    private $baseUri = 'http://api.football-data.org/v4/';
+    private $authToken = 'b839e8fb60fb4321bbb52000faa88039';
 
     public function __construct(MatchManagerInterface $matchManager) {
         $this->matchManager = $matchManager;
 
-        $this->config = parse_ini_file('../config.ini', true);
+        //$this->config = parse_ini_file('../config.ini', true);
 
         // some lame hint for the impatient
-        if($this->config['authToken'] == 'YOUR_AUTH_TOKEN' || !isset($this->config['authToken'])) {
+        if($this->authToken == 'YOUR_AUTH_TOKEN' || !isset($this->authToken)) {
             exit('Get your API-Key first and edit config.ini');
         }
 
-        $this->baseUri = $this->config['baseUri'];
+        //$this->baseUri = $this->config['baseUri'];
 
         $this->reqPrefs['http']['method'] = 'GET';
-        $this->reqPrefs['http']['header'] = 'X-Auth-Token: ' . $this->config['authToken'];
+        $this->reqPrefs['http']['header'] = 'X-Auth-Token: ' . $this->authToken;
+        //$this->reqPrefs['http']['header'] = 'X-Auth-Token: ' . $this->config['authToken'];
     }
 
     public function index (): array {
@@ -71,6 +74,15 @@ class FootballController extends Controller
         }
 
         $matches = $this->matchManager->getAll(15);
+        foreach ($matches as $match) {
+            $match->area = json_decode($match->area);
+            $match->competition = json_decode($match->competition);
+            $match->season = json_decode($match->season);
+            $match->homeTeam = json_decode($match->homeTeam);
+            $match->awayTeam = json_decode($match->awayTeam);
+            $match->score = json_decode($match->score);
+        }
         return response()->json($matches, Response::HTTP_OK);
+
     }
 }
